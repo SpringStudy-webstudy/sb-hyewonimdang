@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/posts")
@@ -24,5 +27,11 @@ public class PostController {
             @RequestBody @Valid CreatePostRequest request) {
         PostResponse response = postService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostResponse> getPost(@PathVariable Long postId) {
+        PostResponse response = postService.getPost(postId);
+        return ResponseEntity.ok(response);
     }
 }
